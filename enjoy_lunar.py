@@ -1,22 +1,19 @@
 import argparse
-
+import time
+import os
+import matplotlib.pyplot as plt
+import numpy as np
 import gym
 
+from stable_baselines.common.vec_env import DummyVecEnv
+from stable_baselines.bench import Monitor
+from stable_baselines.results_plotter import load_results, ts2xy
 
 from stable_baselines.ddpg import DDPG
 from stable_baselines.ppo1 import PPO1
-from stable_baselines.ddpg.policies import MlpPolicy
-import argparse
-import numpy as np
-
-from stable_baselines.common.vec_env import DummyVecEnv
 from stable_baselines.deepq import DQN
-import time
 
-import os
-import matplotlib.pyplot as plt
-from stable_baselines.bench import Monitor
-from stable_baselines.results_plotter import load_results, ts2xy
+
 
 
 def evaluate(model, env, num_steps=1000):
@@ -55,7 +52,7 @@ def evaluate(model, env, num_steps=1000):
 
 def main(args):
     """
-    Run a trained model for the cartpole problem
+    Run a trained model for the environment
 
     :param args: (ArgumentParser) the input arguments
     """
@@ -70,6 +67,7 @@ def main(args):
     model = PPO1.load("ppo_lunar2.pkl", env)
     # model = DDPG.load("ddpg_lunar2.pkl", env)
     # model = DQN.load("dqn_lunar.pkl", env)
+
     avg_rew = evaluate(model=model, env=env, num_steps=10000)
     print(avg_rew)
     while True:

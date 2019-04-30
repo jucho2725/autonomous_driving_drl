@@ -49,6 +49,8 @@ class DiscreteCarRacing(Wrapper):
         return self.env.step(ALLOWED_ACTIONS[action])
 
 
+
+"""Evaluation """
 def evaluate(model, num_steps=1000):
     """
     Evaluate a RL agent
@@ -79,6 +81,7 @@ def evaluate(model, num_steps=1000):
 
     return mean_100ep_reward
 
+"""Main Function"""
 #@title
 # Create log dir
 log_dir = "/tmp/gym/"
@@ -89,36 +92,26 @@ env = DiscreteCarRacing(env)
 env = DummyVecEnv([lambda: env])  # The algorithms require a vectorized environment to run
 
 
-"""DDPG Algorithm"""
+"""DDPG Algorithm """
 # Add some param noise for exploration
 # param_noise = AdaptiveParamNoiseSpec(initial_stddev=0.2, desired_action_stddev=0.2)
 # n_actions = env.action_space.shape[-1]
 # action_noise = OrnsteinUhlenbeckActionNoise(mean=np.zeros(n_actions), sigma=float(0.5) * np.ones(n_actions))
 
 # model1 = DDPG(policy=LnMlpPolicy, gamma=0.995, actor_lr=1e-4, critic_lr=1e-3, env=env, param_noise=param_noise, verbose=1)
-# model1.5 = DDPG(policy=LnMlpPolicy, gamma=0.995, actor_lr=1e-4, critic_lr=1e-3, env=env, action_noise=action_noise, verbose=1)
+# model1 = DDPG(policy=LnMlpPolicy, gamma=0.995, actor_lr=1e-4, critic_lr=1e-3, env=env, action_noise=action_noise, verbose=1)
 #
 
-"""DQN Algorithm"""
-model2 = DQN(
-        env=env,
-        policy=MlpPolicy,
-        learning_rate=1e-3,
-        buffer_size=50000,
-        exploration_fraction=0.1,
-        exploration_final_eps=0.02, verbose=1
-)
-#
+"""DQN Algorithm """
+model2 = DQN(env=env, policy=MlpPolicy, learning_rate=1e-3, buffer_size=50000, exploration_fraction=0.1, exploration_final_eps=0.02, verbose=1)
 
-"""PPO Algorithm"""
+"""PPO Algorithm """
 # model3 = PPO1(policy=MlpPolicy, gamma=0.995, optim_batchsize=32, env=env, verbose=0)
 
 
 
-"""Main"""
-"""Note : All model has same named policy but from different algorithm
-   Can not run three models at once.
-"""
+"""Get result """
+# note : All model has same named policy but from different algorithm. Can not run three models at once.
 
 # ddpg_pr_result = evaluate(model1, num_steps=10000)
 # ddpg_ou_result = evaluate(model1.5, num_steps=10000)
