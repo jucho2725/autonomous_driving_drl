@@ -100,7 +100,6 @@ env = DummyVecEnv([lambda: env])  # The algorithms require a vectorized environm
 
 # model1 = DDPG(policy=LnMlpPolicy, gamma=0.995, actor_lr=1e-4, critic_lr=1e-3, env=env, param_noise=param_noise, verbose=1)
 # model1 = DDPG(policy=LnMlpPolicy, gamma=0.995, actor_lr=1e-4, critic_lr=1e-3, env=env, action_noise=action_noise, verbose=1)
-#
 
 """DQN Algorithm """
 model2 = DQN(env=env, policy=MlpPolicy, learning_rate=1e-3, buffer_size=50000, exploration_fraction=0.1, exploration_final_eps=0.02, verbose=1)
