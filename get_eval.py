@@ -33,13 +33,9 @@ from stable_baselines.common.vec_env import DummyVecEnv
 import gym
 
 
-NUM_ACTIONS = 4
-ALLOWED_ACTIONS = [
-    [-1, 0, 0],
-    [1, 0, 0],
-    [0, 1, 0],
-    [0, 0, 0.8]
-]
+NUM_ACTIONS = 12
+ALLOWED_ACTIONS = np.array(
+            [k for k in it.product([-1, 0, 1], [1, 0], [0.2, 0])])
 
 class DiscreteCarRacing(Wrapper):
     def __init__(self, env):
